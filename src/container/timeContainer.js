@@ -13,16 +13,18 @@ function TimeContainer() {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
-    let interval;
-    if(active) {
-      interval = setInterval(() => {
-        setTimer((timer) => timer + 10)
-      }, 10);
-    } else if(!active){
-      clearInterval(interval)
-    }
-    return () => clearInterval(interval);
-  }, [active]);
+  let interval;
+  if(active) {
+    interval = setInterval(() => {
+      setTimer((timer) => timer + 10)
+    }, 10);
+  } else if(!active){
+    clearInterval(interval)
+  }
+  return () => clearInterval(interval);
+}, [active]);
+  
+  
 
 
   const formatTime = () => {
@@ -39,7 +41,8 @@ function TimeContainer() {
         <h1>{formatTime()}</h1>
       </div>
       <div className="buttons">
-        <button onClick={() => setActive(true)}>Start</button>
+        {/* <button onClick={() => setActive(true)}>Start</button> */}
+        <OnButton setActive ={setActive}/>
         <button onClick={() => setActive(false)}>Stop</button>
         <button onClick={() => setTimer(0)}>Reset</button>       
       </div>

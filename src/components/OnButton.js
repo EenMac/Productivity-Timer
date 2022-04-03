@@ -1,9 +1,10 @@
 import React from 'react'
 import handleStart from "../container/timeContainer"
 
-function OnButton({handleStart, timer, pause, increment, active}) {
+function OnButton({setActive}) {
+
   return (
-    <button onclick={handleStart}>OnButton</button>
+    <button onclick={() => {setActive(true)}}>Go</button>
   )
 }
 
