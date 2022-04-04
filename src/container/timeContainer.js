@@ -11,6 +11,8 @@ import OnListItem from '../components/OnListItem'
 function TimeContainer() {
   const [timer, setTimer] = useState(0)
   const [active, setActive] = useState(false)
+  const [laps, setLaps] = useState([])
+
 
   useEffect(() => {
   let interval;
@@ -22,9 +24,11 @@ function TimeContainer() {
     clearInterval(interval)
   }
   return () => clearInterval(interval);
-}, [active]);
+}, [active])
   
-  
+  const handleGo = () => {
+    setActive(true);
+  }
 
 
   const formatTime = () => {
@@ -42,7 +46,7 @@ function TimeContainer() {
       </div>
       <div className="buttons">
         {/* <button onClick={() => setActive(true)}>Start</button> */}
-        <OnButton setActive ={setActive}/>
+        <OnButton handleGo={handleGo}/>
         <button onClick={() => setActive(false)}>Stop</button>
         <button onClick={() => setTimer(0)}>Reset</button>       
       </div>
