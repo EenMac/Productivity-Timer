@@ -13,7 +13,6 @@ function TimeContainer() {
   const [active, setActive] = useState(false)
   const [laps, setLaps] = useState([])
 
-
   useEffect(() => {
   let interval;
   if(active) {
@@ -26,9 +25,11 @@ function TimeContainer() {
   return () => clearInterval(interval);
 }, [active])
   
-  const handleGo = () => {
-    setActive(true);
+  const handleLaps = (laps) => {
+    setLaps(() => laps)
+    return
   }
+
 
 
   const formatTime = () => {
@@ -39,16 +40,24 @@ function TimeContainer() {
    return `${minutes}:${seconds}:${milliSeconds}`
   }
 
+  
+
   return (
     <div className="stopwatch">
       <div className="numbers">
         <h1>{formatTime()}</h1>
       </div>
       <div className="buttons">
-        {/* <button onClick={() => setActive(true)}>Start</button> */}
-        <OnButton handleGo={handleGo}/>
+        <button onClick={() => setActive(true)}>Start</button>
         <button onClick={() => setActive(false)}>Stop</button>
         <button onClick={() => setTimer(0)}>Reset</button>       
+      </div>
+      <div>
+        <ul>
+          <li>
+            <p id="list-items"></p>
+          </li>
+        </ul>
       </div>
     </div>
   );
