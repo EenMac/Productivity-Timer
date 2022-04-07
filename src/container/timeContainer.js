@@ -66,14 +66,20 @@ function TimeContainer() {
         <button onClick={() => handleStart()}>Start</button>
         <button onClick={() => handleStop()}>Stop</button>
         <button onClick={() => setTimer(0)}>Reset</button>
-        <button onClick={handleLaps}>Lap</button>       
+        <button onClick={handleLap}>Lap</button>       
       </div>
       <div>
-        <ul>
-          <li>
-            <p id="list-items">{formatTime()}</p>
-          </li>
-        </ul>
+        {lap.map(() => {
+          return(
+            <div>
+              <ul>
+                <li>
+                  {formatTime()}
+                </li>
+              </ul>
+            </div>
+          )
+        }) }
       </div>
     </div>
   );
