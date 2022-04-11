@@ -12,7 +12,6 @@ import { renderIntoDocument } from 'react-dom/test-utils'
 function TimeContainer() {
   const [timer, setTimer] = useState(0)
   const [active, setActive] = useState(false)
-  const [pause, setPause] = useState(false)
   const [lap, setLap] = useState([])
 
 
@@ -47,10 +46,6 @@ function TimeContainer() {
     setTimer(0);
   }
   
-  // const lapTime = (lap) => {
-  //   return lap[-1];
-  // }
-
 
 
   const formatTime = () => {
