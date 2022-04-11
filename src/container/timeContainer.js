@@ -15,6 +15,7 @@ function TimeContainer() {
   const [pause, setPause] = useState(false)
   const [lap, setLap] = useState([])
 
+
   useEffect(() => {
   let interval;
   if(active) {
@@ -34,10 +35,22 @@ function TimeContainer() {
   const handleStop = () => {
     setActive(false)
   }
-
-  const handleLap = () => {
-    setLap((lap)=> [...lap, {timer}]);
+  
+  const handleReset = () => {
+    setTimer(0);
+    setLap([]);
   }
+
+  // add lap to Lap state
+  const handleLap = () => {
+    setLap((lap)=> [...lap, [timer]]);
+    setTimer(0);
+  }
+  
+  // const lapTime = (lap) => {
+  //   return lap[-1];
+  // }
+
 
 
   const formatTime = () => {
@@ -48,14 +61,11 @@ function TimeContainer() {
    return `${minutes}:${seconds}:${milliSeconds}`
   }
 
-  function laps(formatTime){
-    document.getElementById("list-items").innerHTML = formatTime
+  const lapInterval = () => {
+    const {length, [length - 2]: secondLast, [length -1]: last} = lap;
+    if(!last) return formatTime(timer)
+    return formatTime(timer-last.timer)
   }
-
-  const handleLaps = (time) => {
-    let lap = document.getElementById("timer").text
-  }
-
   
   return (
     <div className="stopwatch">
@@ -65,16 +75,23 @@ function TimeContainer() {
       <div className="buttons">
         <button onClick={() => handleStart()}>Start</button>
         <button onClick={() => handleStop()}>Stop</button>
-        <button onClick={() => setTimer(0)}>Reset</button>
+        <button onClick={() => handleReset()}>Reset</button>
         <button onClick={handleLap}>Lap</button>       
       </div>
       <div>
-        {lap.map(() => {
+        {lap.map((array, index) => {
+          const lapTime = () => {
+            const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
+            const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
+            const milliSeconds = ("0" + ((array / 10) % 100)).slice(-2)
+         
+            return `${minutes}:${seconds}:${milliSeconds}`
+          }
           return(
             <div>
               <ul>
-                <li>
-                  {formatTime()}
+                <li key={index.valueOf}>
+                  {lapTime()}
                 </li>
               </ul>
             </div>
