@@ -6,6 +6,7 @@ import OnList from '../components/OnList'
 import OffListItem from '../components/OffListItem'
 import OnListItem from '../components/OnListItem'
 import { renderIntoDocument } from 'react-dom/test-utils'
+import "./TimeContainer.css";
 
 
 
@@ -63,7 +64,9 @@ function TimeContainer() {
   }
   
   return (
-    <div className="stopwatch">
+    <div className='stopwatch-wrapper'>
+      <div className="stopwatch">
+    </div>
       <div className="numbers">
         <h1 id="timer">{formatTime()}</h1>
       </div>
@@ -84,8 +87,8 @@ function TimeContainer() {
           }
           return(
             <div>
-              <ul>
-                <li key={index.valueOf}>
+              <ul className='unordered-list-item'>
+                <li className='list-item' key={index.valueOf}>
                   {lapTime()}
                 </li>
               </ul>
