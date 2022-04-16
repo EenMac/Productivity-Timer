@@ -11,9 +11,12 @@ import "./TimeContainer.css";
 
 
 function TimeContainer() {
+  const [totalTime, setTotalTime] = useState(0)
   const [timer, setTimer] = useState(0)
   const [active, setActive] = useState(false)
-  const [lap, setLap] = useState([])
+  const [paused, setPaused] = useState(false)
+  const [onLap, setOnLap] = useState([])
+  const [offLap, setOffLap] = useState([])
 
 
   useEffect(() => {
@@ -38,12 +41,18 @@ function TimeContainer() {
   
   const handleReset = () => {
     setTimer(0);
-    setLap([]);
+    setOnLap([]);
+    setOffLap([]);
   }
 
   // add lap to Lap state
-  const handleLap = () => {
-    setLap((lap)=> [...lap, [timer]]);
+  const handleOnLap = () => {
+    setOnLap((lap)=> [...lap, [timer]]);
+    setTimer(0);
+  }
+
+  const handleOffLap = () => {
+    setOffLap((lap)=> [...lap, [timer]]);
     setTimer(0);
   }
   
@@ -55,12 +64,6 @@ function TimeContainer() {
    const milliSeconds = ("0" + ((timer / 10) % 100)).slice(-2)
 
    return `${minutes}:${seconds}:${milliSeconds}`
-  }
-
-  const lapInterval = () => {
-    const {length, [length - 2]: secondLast, [length -1]: last} = lap;
-    if(!last) return formatTime(timer)
-    return formatTime(timer-last.timer)
   }
   
   return (
@@ -74,10 +77,11 @@ function TimeContainer() {
         <button onClick={() => handleStart()}>Start</button>
         <button onClick={() => handleStop()}>Stop</button>
         <button onClick={() => handleReset()}>Reset</button>
-        <button onClick={handleLap}>Lap</button>       
+        <button onClick={handleOnLap}>OnLap</button>    
+        <button onClick={handleOffLap}>OffLap</button>   
       </div>
       <div>
-        {lap.map((array, index) => {
+        {onLap.map((array, index) => {
           const lapTime = () => {
             const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
             const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
@@ -87,8 +91,28 @@ function TimeContainer() {
           }
           return(
             <div>
-              <ul className='unordered-list-item'>
-                <li className='list-item' key={index.valueOf}>
+              <ul className='on-list'>
+                <li className='on-list-item' key={index.valueOf}>
+                  {lapTime()}
+                </li>
+              </ul>
+            </div>
+          )
+        }) }
+      </div>
+      <div>
+        {offLap.map((array, index) => {
+          const lapTime = () => {
+            const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
+            const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
+            const milliSeconds = ("0" + ((array / 10) % 100)).slice(-2)
+         
+            return `${minutes}:${seconds}:${milliSeconds}`
+          }
+          return(
+            <div>
+              <ul className='off-list'>
+                <li className='off-list-item' key={index.valueOf}>
                   {lapTime()}
                 </li>
               </ul>

@@ -15,5 +15,29 @@
 }
 
 .stopwatch-wrapper{
-    
+    display: block;
+}
+
+.numbers{
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 1px;
+    justify-content: center;
+}
+
+.off-list{
+    display: block;
+    align-items: right;
+    position: relative;
+    padding: 1px;
+    justify-content: right;
+}
+
+.on-list{
+    display: block;
+    align-items: left;
+    position: relative;
+    padding: 1px;
+    justify-content: left;
 }
