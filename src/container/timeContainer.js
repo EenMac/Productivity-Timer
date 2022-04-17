@@ -1,22 +1,28 @@
 import React, {useState, useRef, useEffect} from 'react'
-import OffButton from '../components/OffButton'
-import OnButton from '../components/OnButton'
-import OffList from '../components/OffList'
-import OnList from '../components/OnList'
-import OffListItem from '../components/OffListItem'
-import OnListItem from '../components/OnListItem'
 import { renderIntoDocument } from 'react-dom/test-utils'
 import "./TimeContainer.css";
 
 
 
 function TimeContainer() {
+  const [totalTimeRunning, setTotalTimeRunning] = useState(false)
   const [totalTime, setTotalTime] = useState(0)
   const [timer, setTimer] = useState(0)
   const [active, setActive] = useState(false)
   const [onLap, setOnLap] = useState([])
   const [offLap, setOffLap] = useState([])
 
+  useEffect(() => {
+    let interval;
+    if(totalTimeRunning){
+      interval = setInterval(() => {
+        setTotalTime((time) => time + 10)
+      }, 10);
+    }else if(!totalTimeRunning){
+      clearInterval(interval)
+    }
+    return () => clearInterval(interval)
+  }, [totalTimeRunning])
 
   useEffect(() => {
   let interval;
@@ -32,6 +38,7 @@ function TimeContainer() {
   
   const handleStart = () => {
     setActive(true)
+    setTotalTimeRunning(true)
   }
 
   const handleStop = () => {
@@ -56,7 +63,13 @@ function TimeContainer() {
     setTimer(0);
   }
   
-
+  const formatTotalTime = () => {
+    const minutes = ("0" + Math.floor((totalTime / 60000) % 60)).slice(-2)
+    const seconds = ("0" + Math.floor((totalTime / 1000) % 60)).slice(-2)
+    const milliSeconds = ("0" + ((totalTime / 10) % 100)).slice(-2)
+ 
+    return `${minutes}:${seconds}:${milliSeconds}`
+   }
 
   const formatTime = () => {
    const minutes = ("0" + Math.floor((timer / 60000) % 60)).slice(-2)
@@ -68,6 +81,11 @@ function TimeContainer() {
   
   return (
     <div className='stopwatch-wrapper'>
+      <div>
+        <h3>
+          {formatTotalTime()}
+        </h3>
+      </div>
       <div className="stopwatch">
     </div>
       <div className="numbers">
