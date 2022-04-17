@@ -14,7 +14,6 @@ function TimeContainer() {
   const [totalTime, setTotalTime] = useState(0)
   const [timer, setTimer] = useState(0)
   const [active, setActive] = useState(false)
-  const [paused, setPaused] = useState(false)
   const [onLap, setOnLap] = useState([])
   const [offLap, setOffLap] = useState([])
 
@@ -41,6 +40,7 @@ function TimeContainer() {
   
   const handleReset = () => {
     setTimer(0);
+    setActive(false)
     setOnLap([]);
     setOffLap([]);
   }
@@ -80,46 +80,49 @@ function TimeContainer() {
         <button onClick={handleOnLap}>OnLap</button>    
         <button onClick={handleOffLap}>OffLap</button>   
       </div>
-      <div>
-        {onLap.map((array, index) => {
-          const lapTime = () => {
-            const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
-            const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
-            const milliSeconds = ("0" + ((array / 10) % 100)).slice(-2)
-         
-            return `${minutes}:${seconds}:${milliSeconds}`
-          }
-          return(
-            <div>
-              <ul className='on-list'>
-                <li className='on-list-item' key={index.valueOf}>
-                  {lapTime()}
-                </li>
-              </ul>
-            </div>
-          )
-        }) }
+        <div class='outer-container'>
+          <div class='on'>
+          {onLap.map((array, index) => {
+            const lapTime = () => {
+              const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
+              const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
+              const milliSeconds = ("0" + ((array / 10) % 100)).slice(-2)
+          
+              return `${minutes}:${seconds}:${milliSeconds}`
+            }
+            return(
+              <div>
+                <ul className='on-list'>
+                  <li className='on-list-item' key={index.valueOf}>
+                    {lapTime()}
+                  </li>
+                </ul>
+              </div>
+            )
+          }) }
+        </div>
+          <div class='off'>
+            {offLap.map((array, index) => {
+              const lapTime = () => {
+                const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
+                const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
+                const milliSeconds = ("0" + ((array / 10) % 100)).slice(-2)
+            
+                return `${minutes}:${seconds}:${milliSeconds}`
+              }
+              return(
+                <div>
+                  <ul className='off-list'>
+                    <li className='off-list-item' key={index.valueOf}>
+                      {lapTime()}
+                    </li>
+                  </ul>
+                </div>
+              )
+            }) }
+          </div>
       </div>
-      <div>
-        {offLap.map((array, index) => {
-          const lapTime = () => {
-            const minutes = ("0" + Math.floor((array / 60000) % 60)).slice(-2)
-            const seconds = ("0" + Math.floor((array / 1000) % 60)).slice(-2)
-            const milliSeconds = ("0" + ((array / 10) % 100)).slice(-2)
-         
-            return `${minutes}:${seconds}:${milliSeconds}`
-          }
-          return(
-            <div>
-              <ul className='off-list'>
-                <li className='off-list-item' key={index.valueOf}>
-                  {lapTime()}
-                </li>
-              </ul>
-            </div>
-          )
-        }) }
-      </div>
+      
     </div>
   );
 }
