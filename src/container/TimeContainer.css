@@ -27,17 +27,42 @@
 }
 
 .off-list{
-    display: block;
+    display: flex;
+    flex-direction: row;
     align-items: right;
     position: relative;
-    padding: 1px;
-    justify-content: right;
+    padding: 20px;
+    border: 3px dashed black; 
+    flex-grow: 5;
+   justify-content: right;
 }
 
 .on-list{
-    display: block;
+    display: flex;
     align-items: left;
     position: relative;
-    padding: 1px;
-    justify-content: left;
+    padding: 20px;
+    border: 3px ; 
+    flex-grow: 5;
+}
+
+.list{
+    display: grid;
+    grid-row: auto;
+    
+}
+
+.outer-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.on{
+    flex-grow: 5;
+    align-items: left;
+}
+
+.off{
+    flex-grow: 5;
+    align-items: right;
 }
