@@ -1,5 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
-import { renderIntoDocument } from 'react-dom/test-utils'
+import React, {useState, useEffect} from 'react'
 import "./TimeContainer.css";
 
 
